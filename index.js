@@ -1,6 +1,6 @@
 import { app } from "./app";
 import connectionDB from "./db_connection/db_connection";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
 
 dotenv.config({
@@ -8,7 +8,7 @@ dotenv.config({
 })
 
 
-
+// excuction connectionDB function.
 connectionDB()
 
 // MongoDB proper connections.
@@ -19,4 +19,4 @@ connectionDB()
 })
 .catch( (e) =>{
     console.log(`database is not connected successfully ${e}`);
-})
+})    
