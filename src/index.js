@@ -1,5 +1,5 @@
-import { app } from "./app";
-import connectionDB from "./db_connection/db_connection";
+import { app } from "./app.js";
+import connectionDB from "./db_connection/db_connection.js";
 import dotenv from "dotenv";
 
 
@@ -13,7 +13,7 @@ connectionDB()
 
 // MongoDB proper connections.
 .then( () => {
-    app.listen( Process.env.PORT || 4001 , () =>{
+    app.listen( process.env.PORT || 4001 , () =>{
           console.log(`server is running on PORT no ${process.env.PORT}`);
     })
 })
