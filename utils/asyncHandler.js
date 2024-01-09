@@ -1,13 +1,27 @@
 // This is for promise method.
-const aysncHandler = () =>{
-    (req , res , next) => {
-         Promise.resolve( aysncHandler( req , res , next))
-         .catch( (err) => next(err))
-    }
-}
+const asyncHandler = (handler) => {
+    return (req, res, next) => {
+        Promise.resolve(handler(req, res, next))
+            .catch((err) => next(err));
+    };
+};
+
+export default asyncHandler;
 
 
-export {aysncHandler}
+
+
+// // This is for promise method.
+// const aysncHandler = () =>{
+//     return (req , res , next) => {
+//          Promise.resolve( aysncHandler( req , res , next))
+//          .catch( (err) => next(err))
+//     }
+// }
+
+
+// export default aysncHandler ....error in this code
+
 
 
 
