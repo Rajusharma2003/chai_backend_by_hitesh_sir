@@ -18,7 +18,7 @@ const uplodeOnCloudinary = async function (localFilePath){
 
     if(!localFilePath) return 'could not find the filePath'
 
-     const response =  await cloudinary.uploader.upload(localFilePath , 
+     const response =  await cloudinary.uploader.upload(localFilePath, 
         {
         resource_type : "auto"
         }
