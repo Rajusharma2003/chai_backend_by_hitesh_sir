@@ -1,11 +1,10 @@
-
 // Define the user schema.
 import  Mongoose, {Schema}  from "mongoose";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-const userSchema = new Schema(
-    {
+const userSchema = new Schema({
+  
       username : {
         type : String,
         required : [true , 'username is required'],
