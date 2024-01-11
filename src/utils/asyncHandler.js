@@ -1,10 +1,12 @@
 // This is for promise method.
 const asyncHandler = (handler) => {
+    // console.log("user is inside the asynchandler");
     return (req, res, next) => {
         Promise.resolve(handler(req, res, next))
             .catch((err) => next(err));
     };
 };
+
 
 export default asyncHandler;
 
