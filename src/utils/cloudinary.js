@@ -40,7 +40,7 @@ const uplodeOnCloudinary = async function (localFilePath){
 }
 
 
-export default {
+export {
     uplodeOnCloudinary
 }
 
