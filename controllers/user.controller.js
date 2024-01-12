@@ -2,9 +2,24 @@ import { User } from "../models/user.model.js";
 import  asyncHandler from "../utils/asyncHandler.js"
 import ApiError from "../utils/errorAPI.js"
 import uplodeOnCloudinary from "../utils/cloudinary.js"
+
  
 //  This is for user registration controller.
  const registerUser = asyncHandler(  async (req , res) => {
+
+  // THESE ARE THE STEPS FOR DURING THE USER REGISTRATION.
+
+  // Get user info from frontend.
+  //validation - check
+  //check if user is already exist or not inside the db.
+  //check for image and check for avatar.
+  //upload on cloudinary , avatar.
+  //create user object , create entry inside the db.
+  //remove password and refreshtoken from the user details.
+  // check for user creation 
+  // return res
+
+
 
   // 0. basic
    //  res.status(200).json({
@@ -79,6 +94,7 @@ const user = await User.create({
 
   })
 
+  //  user _id find inside the db and remove (password and refreshToken).
   const createdUser = await User.findById(user._id).select( "-password -refreshToken" )
   
   //  condition for check createdUser is created or not.
