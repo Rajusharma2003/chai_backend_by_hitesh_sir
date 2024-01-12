@@ -33,7 +33,7 @@ const userSchema = new Schema({
         required : [true, "avatar is required"]
       },
 
-      coverimage : {
+      coverImage : {
         type : String   //cloudnary url
       },
 
@@ -49,7 +49,7 @@ const userSchema = new Schema({
         required : [true , 'password is required']
       },
 
-      refreshToke : {
+      refreshToken : {
         type : String
       }
     } , {
@@ -62,7 +62,7 @@ const userSchema = new Schema({
 userSchema.pre('save' , async function (next){
    if(!this.isModified("password")) return next()  // if only password is Modified so they can be sava otherwise not
  
-    this.password = bcrypt.hash(this.password , 10)
+    this.password = await bcrypt.hash(this.password , 10)
 })
 
 // This is a method for campare the bcrypt password.

@@ -1,8 +1,8 @@
- import { User } from "../models/user.model.js";
+import { User } from "../models/user.model.js";
 import  asyncHandler from "../utils/asyncHandler.js"
- import ApiError from "../utils/errorAPI.js"
-
-
+import ApiError from "../utils/errorAPI.js"
+import uplodeOnCloudinary from "../utils/cloudinary.js"
+ 
 //  This is for user registration controller.
  const registerUser = asyncHandler(  async (req , res) => {
 
@@ -23,7 +23,7 @@ import  asyncHandler from "../utils/asyncHandler.js"
   // }  // you can also check with every
   
     if([username, email, password, fullname].some( (fields) => fields?.trim() === "")){
-      throw new ApiError( "400" , "All fields is required")
+      throw new ApiError( 400 , "All fields is required")
     }
 
       // Regular expression for basic email validation
@@ -33,19 +33,58 @@ import  asyncHandler from "../utils/asyncHandler.js"
      if (pattern.test(email)) {
         res.json({ isValid: true, message: 'Valid email address' });
     } else {
-       throw new ApiError( "400" , "Invalid email address pls enter the valid email")
+       throw new ApiError( 400 , "Invalid email address pls enter the valid email")
     }
 
 
 
     // 3. check user is already exist or not.
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
                         $or : [ { username } , { email }] //"method" check inside the db is (username) and (email) is already exist or not
                              })
 
        if (existedUser) {
-        throw new ApiError(  "409" , "user with email or username is already exist")
+        throw new ApiError(  409 , "user with email or username is already exist")
        }                          
+
+
+// check for image and avatar.
+
+   const avatarLoalPath = req.files?.avatar[0]?.path;  // file path from local server , (?) => this is a chaining
+   const coverImagePath = req.files?.coverImage[0]?.path; // file path from local server.
+
+  //  create a condition for check "avatarLoacalPath" is avaliable or not.
+  if (!avatarLoalPath) {
+    throw new ApiError(400 , "avatar is not avaliable") 
+  }
+
+// 4. upload on cloudinary 
+
+   const avatar =  await uplodeOnCloudinary(avatarLoalPath)
+   const coverImage = await uplodeOnCloudinary(coverImagePath)
+
+  //  condition to check
+  if (!avatar) {
+    throw new ApiError(400 , "avatar is not avaliable")
+  }
+
+  // 5. create user object and create inside the database.
+const user = await User.create({
+    username : username.toLowerCase(),
+    email,
+    password,
+    fullname,
+    avatar : avatar.url,
+    coverimage : coverImage.url
+
+  })
+
+  const createdUser = await User.findById(user._id).select( "-password -refreshToken" )
+  
+  //  condition for check createdUser is created or not.
+   if (!createdUser) {
+    throw new ApiError(500 , "something went wrong while user is creating")
+   }
 
 
 
@@ -54,11 +93,6 @@ import  asyncHandler from "../utils/asyncHandler.js"
 
 
 })
-
-
-
-
-
 
 
  export
