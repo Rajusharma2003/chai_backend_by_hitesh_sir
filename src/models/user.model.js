@@ -29,7 +29,7 @@ const userSchema = new Schema({
       },
 
       avatar : {
-        type : String,
+        type : String,   //cloudnary url
         required : [true, "avatar is required"]
       },
 
@@ -107,4 +107,4 @@ userSchema.methods.generateRefreshToken = function () {
 
 
 // This is a export statement.
-export const User = Mongoose.model( 'User' , userSchema)   
+export const youUser = Mongoose.model( 'youUser' , userSchema)   
