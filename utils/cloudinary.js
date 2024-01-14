@@ -14,6 +14,7 @@ cloudinary.config({
 
 const uplodeOnCloudinary = async function (localFilePath){
 
+    // console.log("cloudinary error");
     try {
 
     if(!localFilePath) return 'could not find the filePath'
@@ -40,7 +41,5 @@ const uplodeOnCloudinary = async function (localFilePath){
 }
 
 
-export {
-    uplodeOnCloudinary
-}
+export default uplodeOnCloudinary  
 
